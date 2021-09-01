@@ -1,0 +1,13 @@
+import numpy as np 
+
+samples = 20 
+n = 3
+
+weight_array = np.zeros((n,samples,samples))
+
+for i in range(0,n):
+    weight_array[i] = np.random.rand(samples)
+    weight_array[i][0] = 0
+    file_name =  'weight[' + str(i) + ']temperature' + '.txt'
+    np.savetxt(file_name, weight_array[i], fmt='%1.2f')
+    print(file_name)

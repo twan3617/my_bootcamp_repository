@@ -1,0 +1,19 @@
+
+def rhs_tri(n):
+    space = ' '
+    spaces = ''
+    for i in range(0,n):
+        for j in range(0,i+1):
+            spaces += space
+        if i != n-1: 
+            print('*' + spaces + '*')
+        else: 
+            print('* '*n)
+# Something like this...
+
+def main(): 
+    if __name__ == "__main__":
+        num = int(input("How many lines: "))
+        rhs_tri(num)
+    
+main()
