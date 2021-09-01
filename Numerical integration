@@ -1,0 +1,35 @@
+### Numerical Integration, 1
+### Integrating f(x) = e^x between 0 and 1. 
+import numpy as np
+
+def f(x):
+    return np.exp(x)
+
+def rect(a,b):
+    return (b-a) * f((a + b) / 2)
+
+def mid_int_e(h,a,b): 
+    xpoints = np.arange(a,b+h,h)
+    approx = 0
+    for i in range(1,np.size(xpoints)):
+        approx += rect(xpoints[i-1], xpoints[i])
+    return approx 
+
+def find_opt(tol,h,a,b):
+    realval = f(1) - f(0)
+    error = 1
+    while error > tol:
+        h = h / 10
+        error = abs(mid_int_e(h,a,b) - realval)
+        print(f"Error = {error}. h = {h}")
+
+
+def main():
+    if __name__ == "__main__":
+        tol = 10e-4
+        h = 0.01
+        a = 0
+        b = 1
+        find_opt(tol,h,a,b)
+
+main()
