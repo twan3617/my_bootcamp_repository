@@ -12,6 +12,9 @@
     Our solution can be improved vastly. We should be able to provide the code with a text file or 
     csv file that defines a grid, rather than hard coding it ourselves. We should be able to deal with 
     non-square grids. There should also be an implementation of a "shortest path" algorithm (e.g. Dijkstra's)'''
+import matplotlib.pyplot as plt
+import time as time
+
 
 grid = [[0, 0, 0, 1, 0, 1],
         [1, 1, 0, 1, 0, 1],
@@ -38,6 +41,15 @@ def find_path(x, y):
         return False
 
     grid[x][y] = 3 #visited 
+    # animation!
+    plt.pcolormesh(grid)
+    plt.axes().set_aspect('equal') #set the x and y axes to the same scale
+    plt.xticks([]) # remove the tick marks by setting to an empty list
+    plt.yticks([]) # remove the tick marks by setting to an empty list
+    #plt.axes().invert_yaxis() #invert the y-axis so the first row of data is at the top
+    plt.show(block = False)    
+    plt.pause(1)
+
     print(f"({x},{y}) visited.\n")
 
     if find_path(x,y+1) == True: #East
