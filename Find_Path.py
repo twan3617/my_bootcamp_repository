@@ -48,7 +48,7 @@ def find_path(x, y):
     plt.yticks([]) # remove the tick marks by setting to an empty list
     #plt.axes().invert_yaxis() #invert the y-axis so the first row of data is at the top
     plt.show(block = False)    
-    plt.pause(1)
+    plt.pause(0.5)
 
     print(f"({x},{y}) visited.\n")
 
