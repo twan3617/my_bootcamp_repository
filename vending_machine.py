@@ -10,7 +10,8 @@ import numpy as np
 
 ### FUTURE IMPROVEMENTS
 ### Use switch statements to remove the many if-else statements
-### Use OOP to remove redundancies? 
+### Use OOP to remove redundancies
+### Also, use OOP to create a state-wide and nation-wide list of vending machines.
 
 class VendingMachine():
     def __init__(self, money):

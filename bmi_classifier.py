@@ -1,6 +1,33 @@
 import datetime
 from bisect import bisect
 
+
+### The following code creates a basic BMI classifier.
+### When run, you will be asked for your birthdate, age, weight and height. Then it will compute
+### your BMI (making the necessary conversions), and return your classification on the BMI scale.
+
+### FUTURE IMPROVEMENTS:
+### Instead, we can instantiate a Person class which has attributes age, height and weight.
+
+# class Person: 
+#     def __init__(self, id, fname, lname, email): 
+#         self.personid = id
+#         self.fname = fname
+#         self.lname = lname
+#         self.age = 0 
+#         self.weight = 0
+
+#         self.height = 1
+#         self.email = email
+#         self.past_weights = []
+#         self.weight_date = []
+#         self.BMI = 0
+    
+#     def __iter__(self):
+#         for attr, value in self.__dict__.iteritems():
+#             yield attr, value
+# Put in an __iter__ method, like above, or use vars(instance) to get a dictionary of attributes 
+
 def get_bdate():
     print(f"Enter the following information using numeric values. \n")
     
@@ -47,7 +74,6 @@ def get_bmi(weight, height): #bmi computation
 def get_class(bmi, breakpoints, classify): #Use bisect function and breakpoints to fit given bmi into classes.
     i = bisect(breakpoints, bmi)
     return classify[i]
-
 
 
 if __name__ == "__main__": 
