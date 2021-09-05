@@ -13,13 +13,13 @@ import numpy as np
 ### Use OOP to remove redundancies
 ### Also, use OOP to create a state-wide and nation-wide list of vending machines.
 
-### List of machines in a given state
+### Class containing vending machine information that can be sorted based on ID or location.
 class MachineList():
-    def __init__(self, vendors): #initiation takes in a list of vending machine classes
+    def __init__(self, vendors): #initiation takes in a list of vending machine classes and stores a dictionary of IDs and locations.
         self.IDLoc = { "ID":{vendor.ID: vendor for vendor in vendors}, "Location": {vendor.location: vendor for vendor in vendors}}
         return 
         
-    def addVendor(self, vendor): #Alternatively, add vending machines using add_vendor method
+    def addVendor(self, vendor): #Alternatively, add vending machines manually using add_vendor method
         self.IDLoc["ID"][vendor.ID] = vendor
         self.IDLoc["Location"][vendor.location] = vendor
         return
@@ -31,13 +31,17 @@ class MachineList():
                 print(ID)
         return 
 
+### Generic base class for "shop item", which has cost, stock and sales information.
+### Coins are also a shop item; the "sales" attribute refers to the number of # coins used.
 class ShopItem():
     def __init__(self, cost, stock, sales):
         self.cost = cost
         self.stock = stock
         self.sales = sales
-### Coins are also a shop item; the "sales" attribute refers to the number of # coins used.
 
+### VendingMachine Class; instantiate with some amount of money and a location. 
+### The vending machine has methods to print the available menu, compute total cost of selection and return change 
+### with appropriate error messages when stock in the items or coins runs out. 
 class VendingMachine():
     def __init__(self, money, location):
         ### Generate a random 6 digit number for itself.
@@ -56,8 +60,10 @@ class VendingMachine():
         costs = [0.75, 1.20, 1.20, 1.00, 1.50, 0.95, 1.10, 0.50, 1.20]
         coins = [1, 0.50, 0.20, 0.10, 0.05] #Coin denominations
         self.num_items = len(item_names)
-        dict_items = dict(zip(item_names, costs))
+        dict_items = dict(zip(item_names, costs)) 
 
+        #self.items and self.coins are dictionaries indexed by name/denominations respectively with values being shop item objects.
+        #This allows us to keep track of items via their names or indices.
         self.items = {name: ShopItem(cost, self._max_items, 0) for name, cost in dict_items.items()}
         self.coins = {denom: ShopItem(denom, self._max_coins, 0) for denom in coins}
         self._sales = dict(zip(item_names,np.zeros(self.num_items)))
@@ -89,8 +95,8 @@ class VendingMachine():
         pass
 
     def MakeSelection(self):
-        choice = []
-        choice_names = []
+        choice = [] #Empty list to contain (numerical) selections made in the loop/
+        choice_names = [] #Empty list to contain names of selections (for readability)
         while True: 
             selection = int(input("Choose an option from 1 to 9, or 10 to quit. "))
             ### Check if secret code was given first
@@ -110,6 +116,7 @@ class VendingMachine():
                 print("Your selections have been made.")
                 return choice, self.ComputeCost(choice)
 
+            #Obtain key corresponding to numerical selection for future indexing use
             item_key = list(self.items.keys())[selection-1]
             choice_names.append(item_key)
 
@@ -118,11 +125,10 @@ class VendingMachine():
 
             else:  
                 choice.append(selection)
-
                 print(f"You have chosen {selection}: {item_key}, costing ${self.items[item_key].cost:.2f}")
                 cont = input("Continue? (y/n) ")
 
-                if cont == "n":  #Use switch() statements here instead?
+                if cont == "n":  
                     cost = self.ComputeCost(choice)
                     if cost > self.money: 
                         print("You don't have enough money! Returning...")
@@ -167,7 +173,7 @@ class VendingMachine():
         
         pass
 
-def main():
+def main(): ### Test main() function
     # if __name__ == "__main__":
     #     VM = VendingMachine(10, "Sydney")
     #     while True: 
@@ -175,13 +181,13 @@ def main():
     #         choice, cost = VM.MakeSelection()
     #         VM.ReturnChange(choice, cost)
     # return 0 
-    VM1 = VendingMachine(10, "Sydney")
+    VM1 = VendingMachine(10, "Sydney") ### Initiate vending machines in a number of locations, load it into MachineList, and print out the ID and location information.
     VM2 = VendingMachine(10, "Auckland")
     VM3 = VendingMachine(10, "Venice")
     
     V = [VM1, VM2, VM3]
 
     ML = MachineList(V)
-    ML.printList()
+    ML.printList() 
 
 main()
