@@ -13,16 +13,36 @@ import numpy as np
 ### Use OOP to remove redundancies
 ### Also, use OOP to create a state-wide and nation-wide list of vending machines.
 
+### List of machines in a given state
+class MachineList():
+    def __init__(self, vendors): #initiation takes in a list of vending machine classes
+        self.IDLoc = { "ID":{vendor.ID: vendor for vendor in vendors}, "Location": {vendor.location: vendor for vendor in vendors}}
+        return 
+        
+    def addVendor(self, vendor): #Alternatively, add vending machines using add_vendor method
+        self.IDLoc["ID"][vendor.ID] = vendor
+        self.IDLoc["Location"][vendor.location] = vendor
+        return
+    
+    def printList(self):
+        for choice, vendor_dict in self.IDLoc.items(): 
+            print(choice + ': ')
+            for ID in vendor_dict.keys():
+                print(ID)
+        return 
+
 class ShopItem():
     def __init__(self, cost, stock, sales):
         self.cost = cost
         self.stock = stock
         self.sales = sales
-
 ### Coins are also a shop item; the "sales" attribute refers to the number of # coins used.
 
 class VendingMachine():
-    def __init__(self, money):
+    def __init__(self, money, location):
+        ### Generate a random 6 digit number for itself.
+        self.ID = ''.join(["{}".format(np.random.randint(0, 9)) for num in range(0, 10)]) 
+        self.location = location
 
         self.money = money #money put into the vending machine
 
@@ -148,11 +168,20 @@ class VendingMachine():
         pass
 
 def main():
-    if __name__ == "__main__":
-        VM = VendingMachine(10)
-        while True: 
-            VM.ShowMenu()
-            choice, cost = VM.MakeSelection()
-            VM.ReturnChange(choice, cost)
-    return 0 
+    # if __name__ == "__main__":
+    #     VM = VendingMachine(10, "Sydney")
+    #     while True: 
+    #         VM.ShowMenu()
+    #         choice, cost = VM.MakeSelection()
+    #         VM.ReturnChange(choice, cost)
+    # return 0 
+    VM1 = VendingMachine(10, "Sydney")
+    VM2 = VendingMachine(10, "Auckland")
+    VM3 = VendingMachine(10, "Venice")
+    
+    V = [VM1, VM2, VM3]
+
+    ML = MachineList(V)
+    ML.printList()
+
 main()
