@@ -89,8 +89,8 @@ class anneal_class():
         alphas = np.abs(np.linspace(-1.0, 1.0, theCM.N))
         theCM._lut[:-3,-1] = alphas
 
-        x_surf=np.arange(self.bounds[0,:], 0.01)                # generate a mesh
-        y_surf=np.arange(self.bounds[0,:], 0.01)
+        x_surf=np.arange(self.bounds[0,0], self.bounds[0,1], 0.01)                # generate a mesh
+        y_surf=np.arange(self.bounds[1,0], self.bounds[1,1], 0.01)
         x_surf, y_surf = np.meshgrid(x_surf, y_surf)
         z_surf = self.objective((x_surf,y_surf))           # ex. function, which depends on x and y
         ax.plot_surface(x_surf, y_surf, z_surf, cmap=theCM);    # plot a 3d surface plot
@@ -118,13 +118,11 @@ def main():
     error = 1
     temp = 10
     n_iter = 2000
-    bounds = asarray([[-5.0, 5.0], 
-            [-5.0, 5.0]])
-    init = bounds[:,0] + rand(len(bounds)) * (bounds[:,1] - bounds[:,0])
+    bounds = asarray([[-5.0, 5.0], [-5.0, 5.0]])
     sim = anneal_class(a, b, step_size, bounds, temp, n_iter)
     best, best_eval, best_history = sim.anneal()
-    #sim.plot(best_history)
-    x_surf=np.arange(bounds[0,:], 0.01)
+    sim.plot(best_history)
+    #x_surf=np.arange(bounds[0,0], bounds[0,1], step = 0.01)
     return 
 
 if __name__ == "__main__": 
